@@ -30,7 +30,7 @@ const Ball = () => {
     //spring updates the value of the element
     //takes in the position, what we want to modify to and we need to start.
     Animated.spring(position, {
-        toValue: { x: 300, y: 500 },
+        toValue: { x: 100, y: 500 },
         useNativeDriver: false,
     }).start();
 

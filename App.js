@@ -1,12 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import Ball from "./src/components/Ball";
+import Deck from "./src/classComponents/Deck";
 
 export default function App() {
     return (
         <View style={styles.container}>
-            <Ball />
-            <StatusBar style="auto" />
+            <Deck />
         </View>
     );
 }
