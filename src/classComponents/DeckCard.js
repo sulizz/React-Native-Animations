@@ -30,7 +30,9 @@ export default class DeckCard extends Component {
     }
 
     //helper function that controls the card animation and styling.
-    getCardStyle() {}
+    getCardStyle() {
+        return this.state.position.getLayout();
+    }
 
     renderCards() {
         return this.props.data.map((item, index) => {
@@ -38,7 +40,7 @@ export default class DeckCard extends Component {
                 return (
                     <Animated.View
                         key={item.id}
-                        style={this.state.position.getLayout()}
+                        style={this.getCardStyle()}
                         {...this.state.panResponder.panHandlers}
                     >
                         {this.props.renderCard(item)}
