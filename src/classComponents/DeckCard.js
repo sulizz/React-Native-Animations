@@ -49,6 +49,7 @@ export default class DeckCard extends Component {
                     </Animated.View>
                 );
             }
+            return this.props.renderCard(item);
         });
     }
     render() {
