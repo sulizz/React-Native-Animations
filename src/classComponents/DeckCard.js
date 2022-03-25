@@ -14,27 +14,23 @@ export default class DeckCard extends Component {
         const position = new Animated.ValueXY();
 
         const panResponder = PanResponder.create({
-            // Ask to be the responder:
             //function is exectued anytime a user taps on the screen. Press down.
             onStartShouldSetPanResponder: () => true,
 
             //callback will be called as user is pressing and dragging.
             onPanResponderMove: (event, gestureState) => {
-                // The most recent move distance is gestureState.move{X,Y}
-                // The accumulated gesture distance since becoming responder is
-                // gestureState.d{x,y}
                 position.setValue({ x: gestureState.dx, y: gestureState.dy });
             },
 
             //user presses down and drag and release.
-            onPanResponderRelease: () => {
-                // The user has released all touches while this view is the
-                // responder. This typically means a gesture has succeeded
-            },
+            onPanResponderRelease: () => {},
         });
 
         this.state = { panResponder, position };
     }
+
+    //helper function that controls the card animation and styling.
+    getCardStyle() {}
 
     renderCards() {
         return this.props.data.map((item, index) => {
