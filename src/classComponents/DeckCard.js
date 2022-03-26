@@ -1,10 +1,4 @@
-import {
-    Text,
-    View,
-    PanResponder,
-    Animated,
-    TurboModuleRegistry,
-} from "react-native";
+import { Text, View, PanResponder, Animated } from "react-native";
 import React, { Component } from "react";
 
 export default class DeckCard extends Component {
@@ -23,7 +17,9 @@ export default class DeckCard extends Component {
             },
 
             //user presses down and drag and release.
-            onPanResponderRelease: () => {},
+            onPanResponderRelease: () => {
+                position.setValue({ x: 0, y: 0 });
+            },
         });
 
         this.state = { panResponder, position };
@@ -31,7 +27,16 @@ export default class DeckCard extends Component {
 
     //helper function that controls the card animation and styling.
     getCardStyle() {
-        return this.state.position.getLayout();
+        const { position } = this.state;
+        const rotate = position.x.interpolate({
+            inputRange: [-500, 0, 500],
+            outputRange: ["-120deg", "0deg", "120deg"],
+        });
+
+        return {
+            ...position.getLayout(),
+            transform: [{ rotate: rotate }],
+        };
     }
 
     renderCards() {
