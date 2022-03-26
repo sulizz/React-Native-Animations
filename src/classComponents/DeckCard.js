@@ -29,7 +29,7 @@ export default class DeckCard extends Component {
     getCardStyle() {
         const { position } = this.state;
         const rotate = position.x.interpolate({
-            inputRange: [-500, 0, 500],
+            inputRange: [-400, 0, 400],
             outputRange: ["-120deg", "0deg", "120deg"],
         });
 
