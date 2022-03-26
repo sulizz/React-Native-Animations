@@ -2,7 +2,8 @@ import { Text, View, PanResponder, Animated, Dimensions } from "react-native";
 import React, { Component } from "react";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-console.log(SCREEN_WIDTH);
+const SWIPE_THRESHOLD = Dimensions.get("window").width * 0.6;
+const SWIPE_OUT_DURATION = 250;
 export default class DeckCard extends Component {
     constructor(props) {
         super(props);
@@ -19,8 +20,17 @@ export default class DeckCard extends Component {
             },
 
             //user presses down and drag and release.
-            onPanResponderRelease: () => {
-                this.resetPosition();
+            onPanResponderRelease: (event, gestureState) => {
+                if (gestureState.dx > SWIPE_THRESHOLD) {
+                    this.forceSwipeCard("right");
+                    console.log("likee");
+                } else if (gestureState.dx < -SWIPE_THRESHOLD) {
+                    this.forceSwipeCard("left");
+                    console.log("dislike");
+                } else {
+                    this.resetPosition();
+                }
+                // this.resetPosition();
             },
         });
         this.state = { panResponder, position };
@@ -43,6 +53,15 @@ export default class DeckCard extends Component {
     resetPosition() {
         Animated.spring(this.state.position, {
             toValue: { x: 0, y: 0 },
+            useNativeDriver: false,
+        }).start();
+    }
+
+    forceSwipeCard(direction) {
+        const x = direction === "right" ? SCREEN_WIDTH : -SCREEN_WIDTH;
+        Animated.timing(this.state.position, {
+            toValue: { x: x, y: 0 },
+            duration: SWIPE_OUT_DURATION,
             useNativeDriver: false,
         }).start();
     }

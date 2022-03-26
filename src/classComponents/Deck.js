@@ -15,7 +15,8 @@ class Deck extends Component {
                     style={styles.imageContainer}
                     resizeMode="cover"
                 />
-                <Button title="Solid Button" icon={{ name: "home" }} />
+                <Button title="NAME_LASTNAME" icon={{ name: "home" }} />
+                <Text>hobbies n shit</Text>
             </Card>
         );
     }
