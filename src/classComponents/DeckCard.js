@@ -1,6 +1,8 @@
-import { Text, View, PanResponder, Animated } from "react-native";
+import { Text, View, PanResponder, Animated, Dimensions } from "react-native";
 import React, { Component } from "react";
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
+console.log(SCREEN_WIDTH);
 export default class DeckCard extends Component {
     constructor(props) {
         super(props);
@@ -18,10 +20,9 @@ export default class DeckCard extends Component {
 
             //user presses down and drag and release.
             onPanResponderRelease: () => {
-                position.setValue({ x: 0, y: 0 });
+                this.resetPosition();
             },
         });
-
         this.state = { panResponder, position };
     }
 
@@ -29,7 +30,7 @@ export default class DeckCard extends Component {
     getCardStyle() {
         const { position } = this.state;
         const rotate = position.x.interpolate({
-            inputRange: [-400, 0, 400],
+            inputRange: [-SCREEN_WIDTH * 2.5, 0, SCREEN_WIDTH * 2.5],
             outputRange: ["-120deg", "0deg", "120deg"],
         });
 
@@ -37,6 +38,13 @@ export default class DeckCard extends Component {
             ...position.getLayout(),
             transform: [{ rotate: rotate }],
         };
+    }
+
+    resetPosition() {
+        Animated.spring(this.state.position, {
+            toValue: { x: 0, y: 0 },
+            useNativeDriver: false,
+        }).start();
     }
 
     renderCards() {
